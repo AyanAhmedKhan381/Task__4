@@ -4,7 +4,6 @@ import pypdf
 from agents import Agent, function_tool, OpenAIChatCompletionsModel
 from openai import AsyncOpenAI
 
-API = os.getenv("GEMINI_API_KEY")
 MODEL = "gemini-2.0-flash"
 
 # --- PDF extraction ---
@@ -22,9 +21,9 @@ def pdf_tool(file_path: str) -> str:
     return extract_pdf_text(file_path)
 
 # --- Create Agent ---
-def get_agent():
+def get_agent(api_key: str):
     client = AsyncOpenAI(
-        api_key=API,
+        api_key=api_key,
         base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
     )
     model = OpenAIChatCompletionsModel(model=MODEL, openai_client=client)

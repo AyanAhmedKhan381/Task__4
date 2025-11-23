@@ -7,7 +7,7 @@ from agent_module import get_agent, extract_pdf_text
 
 # --- Load environment ---
 load_dotenv()
-API_KEY = os.getenv("GEMINI_API_KEY")
+API_KEY = os.getenv("GEMINI_API_KEY")  # Streamlit Cloud or local .env
 
 # --- Streamlit page config ---
 st.set_page_config(
@@ -70,8 +70,8 @@ if uploaded_file:
     with st.expander("📄 Preview PDF Content"):
         st.text_area("PDF Content", extracted_text, height=300)
 
-    # Initialize agent
-    agent = get_agent()
+    # Initialize agent with API_KEY
+    agent = get_agent(api_key=API_KEY)
 
     # --- Buttons in two columns ---
     col1, col2 = st.columns(2)
@@ -110,7 +110,7 @@ if uploaded_file:
 
             result = asyncio.run(run_quiz())
             final_output = getattr(result, "final_output", str(result))
-            # Clean any agent HTML tags
+            # Remove any <div> from agent output
             final_output = final_output.replace("<div class='quiz-box'>", "").replace("</div>", "")
             st.markdown(
                 f"<div class='quiz-box'>{final_output}</div>",
