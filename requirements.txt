@@ -1,0 +1,8 @@
+streamlit
+altair
+tornado
+click
+watchdog
+pypdf
+python-dotenv
+openai-agents
